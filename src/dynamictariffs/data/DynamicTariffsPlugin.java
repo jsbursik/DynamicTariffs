@@ -4,6 +4,7 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.BaseModPlugin;
 import org.apache.log4j.Logger;
 import dynamictariffs.data.scripts.ModifyTariffs;
+import dynamictariffs.data.scripts.SettingsUtil;
 
 public class DynamicTariffsPlugin extends BaseModPlugin {
 
@@ -12,7 +13,8 @@ public class DynamicTariffsPlugin extends BaseModPlugin {
     @Override
     public void onGameLoad(boolean newGame){
         log.info("DynamicTariffs: Dynamic Tariffs loaded!");
-        new ModifyTariffs();   
+        new ModifyTariffs();
+        SettingsUtil.readSettings();
     }
     
 }

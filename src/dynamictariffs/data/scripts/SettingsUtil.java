@@ -43,7 +43,6 @@ public class SettingsUtil {
     *   Checks for whitelist of the market being opened
     */
     public static boolean isWhitelisted(MarketAPI market){
-        readSettings(); // Called here because ModifyTariffs.class checks whitelist FIRST
         boolean result = false;
         if(whitelist.contains(market.getId())){
             result = true;
