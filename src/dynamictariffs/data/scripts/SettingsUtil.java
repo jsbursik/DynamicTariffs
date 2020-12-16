@@ -24,6 +24,7 @@ public class SettingsUtil {
     *   This reads in the settings.json and populates the percents and whitelist arrays
     */
     public static void readSettings(){
+        whitelist.clear();
         try {
             JSONObject modSettings = settings.loadJSON("settings.json", "dynamictariffs");
             JSONArray jsonPercents = modSettings.getJSONArray("dt_percents");
