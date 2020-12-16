@@ -1,20 +1,24 @@
 # Dynamic Tariffs
-This is a mod for [Starsector](https://fractalsoftworks.com/) that dynamically changes tariffs based on your current reputation with the faction that owns the market.
+This is a utility mod for [Starsector](https://fractalsoftworks.com/) that dynamically changes tariffs based on your current reputation with the faction that owns the market.
 
 ## How it works
-Currently I am utilizing the `BaseCampaignEventListener` to `reportPlayerOpenedMarket(MarketAPI market)` to modify the tariffs as soon as you open a market.
-The specific modifaction is done with `modifyFlat(String source, float value)` which allows the modifications to be removed with `unmodify(String source)` on `reportPlayerClosedMarket(MarketAPI market)`.
-Because of this behavior the mod can be installed/removed mid playthrough ONCE I transition the code to use a Transient Listener instead of a Permanent Listener.
+The `settings.json` contains percents from Suspicious to Cooperative, as well as a whitelist.
+When you open a market, the mod first checks if the market is whitelisted, if it is, it checks your rep with the owning faction and applies a modification to the tariff.
+When you close the market, the specific modifications made by this mod will then be removed.
 
-## TO-DO
-- [X] Write an actual README.md
-- [X] Streamline the Git repo
-- [X] Restructure packages
-- [ ] Implement a settings.json for percents
-- [ ] Whitelist Vanilla markets in said json
-- [ ] Refactor for Transient Listener vs Permanent (utility:true)
+## Stock settings
+Reputation | Tariff
+---------|----------
+Suspicious | 30%
+Neutral | 15%
+Favorable | 10%
+Welcoming | 5%
+Friendly | 2%
+Cooperative | 0%
 
-And an ongoing todo will be to just slim down the code/refactor for efficiency.
+To modify these value, edit `settings.json`.
+
+Note: You can technically make the tariffs negative and they will pay YOU for selling to them. The UI will still say "-number"
 
 ### Current Workflow setup
 * Currently using Apache NetBeans IDE version 10.0 on Linux (Ubuntu 20.04 LTS) to code all of this.
