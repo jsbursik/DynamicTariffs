@@ -18,6 +18,8 @@ Cooperative | 0%
 
 To modify these value, edit `settings.json`.
 
+Also, It doesn't go below "Suspicious" because you can't trade with factions below that reputation level.
+
 Note: You can technically make the tariffs negative and they will pay YOU for selling to them. The UI will still say "-number"
 
 ### Current Workflow setup
