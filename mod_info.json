@@ -2,7 +2,7 @@
     "id":"dynamictariffs",
     "name":"Dynamic Tariffs",
     "version":"1.0",
-    "description":"Dynamically changes the tariffs of markets you visit based on your reputation with the owning faction.\nThis mod can be added/removed at any time\nSettings can be found in settings.json",
+    "description":"Dynamically changes the tariffs of markets you visit based on your reputation with the owning faction.\n\nThis mod can be added/removed at any time\n\nSettings can be found in settings.json",
     "gameVersion":"0.9.1a-RC8",
     "author":"Tuv0x",
     "utility":"true",
