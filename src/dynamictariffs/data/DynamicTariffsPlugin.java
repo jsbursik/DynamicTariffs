@@ -12,7 +12,7 @@ public class DynamicTariffsPlugin extends BaseModPlugin {
     @Override
     public void onGameLoad(boolean newGame){
         log.info("DynamicTariffs: Dynamic Tariffs loaded!");
-        new ModifyTariffs();
+        new ModifyTariffs();   
     }
     
 }

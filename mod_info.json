@@ -5,7 +5,7 @@
     "description":"Dynamically changes the tariffs of markets you visit based on your reputation with the owning faction.\nThis mod can be added/removed at any time, the percents.txt file in the mod directory can be modified even while playing (It requires 6 comma separated values)\nWILL MODIFY OTHER MOD MARKETS",
     "gameVersion":"0.9.1a-RC8",
     "author":"Tuv0x",
-    "utility":"false",
+    "utility":"true",
     "jars":["jars/Dynamic_Tariffs.jar"],
     "modPlugin":"dynamictariffs.data.DynamicTariffsPlugin"
 }

@@ -12,27 +12,33 @@ public class ModifyTariffs extends BaseCampaignEventListener {
     public static Logger log = Global.getLogger(ModifyTariffs.class);
     
     public ModifyTariffs() {
-        super(true);
+        super(false);
+        Global.getSector().addTransientListener(this);
     }
 
     /*  
-    *   This will go off anytime you click on a planet/station
-    *   Markets have a MutableStat for their tariff (getTariff())
-    *   it has a base value (float) and modified value (float), 
-    *   the base is 0.0 and the modified value at gen will be 0.3f (30% tariff).
-    *
-    *   This takes your RepLevel with the Faction of the market you just opened,
-    *   and then modifies the Tariff based on that RepLevel. 
-    *
-    *   Here is the list from hostile to friendly:
-    *   40%, 30%, 20%, 15%, 10%, 5%, 0%
+    *   This method is called anytime you open a market
+    *   and modifies the tariff according to your rep
+    *   ONLY if it is a part of the whitelist
     */
     @Override
     public void reportPlayerOpenedMarket(MarketAPI market){
-        int[] percents = SettingsReaderUtil.readSettings();
         log.info("DynamicTariffs: Player opened Market");
-        RepLevel rep = market.getFaction().getRelationshipLevel(Global.getSector().getFaction(Factions.PLAYER));
+        if(SettingsUtil.isWhitelisted(market)){
+            modifyTariff(market);
+        } else {
+            log.info("DynamicTariffs: Market is not on whitelist");
+        }
+    }
+    
+    /*
+    *   This is where all the heavy lifting happens
+    */
+    public static void modifyTariff(MarketAPI market){
         float flat = 0.0f;
+        int[] percents = SettingsUtil.getPercents();
+        RepLevel rep = market.getFaction().getRelationshipLevel(Global.getSector().getFaction(Factions.PLAYER));
+        
         switch(rep)
         {
             case SUSPICIOUS:
@@ -55,32 +61,31 @@ public class ModifyTariffs extends BaseCampaignEventListener {
                 break;
         }
         
-        market.getTariff().modifyFlat("dynamictariffs", flat); // flat gets ADDED to the Modified Value (0.3f)
-        log.info("DynamicTariffs: " + rep + " " + market.getTariff().getModifiedValue());
+        market.getTariff().modifyFlat("dynamictariffs", flat);
         
+        log.info("DynamicTariffs: " + rep + " " + market.getTariff().getModifiedValue());
         // For Reference, this is how the modified value is recomputed
         // modified = base + base * percentMod / 100f + flatMod
     }
     
     /*
-    *   This takes the percentage (40 = 40%) and 
-    *   subtracts the normal tariff (30%) then divides by 100
-    *   to yield the offset from the base tariff (40-30)/100f=0.1f
+    * This takes a number like 40, subtracts the vanilla tariff
+    * of 30 to get the offset, then turns it into something like 0.1f
     */
-    public float getOffset(float percent) {
+    public static float getOffset(float percent) {
         return (percent - 30) / 100f;
     }
     
     /*
-    *   This makes sure that when you leave a market, it goes back to normal.
-    *   If you don't want this mod anymore, all the modifications
-    *   will be removed, so this mod can be installed/removed
-    *   at any time.
+    *   This makes sure all tariff changes made by this mod
+    *   are removed when you leave a market.
     */
     @Override
     public void reportPlayerClosedMarket(MarketAPI market){
         log.info("DynamicTariffs: Player Closed Market");
-        market.getTariff().unmodify("dynamictariffs");
+        if(SettingsUtil.isWhitelisted(market)){
+            market.getTariff().unmodify("dynamictariffs");
+        }
     }
     
 }

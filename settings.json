@@ -1,0 +1,15 @@
+{
+    "dt_percents":[30,15,10,5,2,0],
+
+    "dt_whitelist":["ancyra_market","derinkuyu_market","sindria","volturn","cruor",
+                    "nortia","umbra","chicomoztoc","coatl","tigra_city","eventide",
+                    "orthrus","sphinx","asharu","jangala","corvus_IIIa","raesvelg",
+                    "skathi","ragnar_complex","nomios","arcadia_station","agreus",
+                    "new_maxios","kantas_den","tibicena","tartessus","baetis","hesperus",
+                    "culann","eochu_bres","cethlenn","donn","qaras","salamanca","cibola",
+                    "madeira","yama","nachiketa","gilead","asher","mairaath",
+                    "mairaath_abandoned_station2","port_tse","athulf","fikenhild",
+                    "suddene","ailmar","mazalot","ilm","yesod","kazeron","eldfell",
+                    "thule_pirate_station","epithany","chalcedon","olinadu","kanni",
+                    "laicaille_habitat","station_kapteyn"]
+}
