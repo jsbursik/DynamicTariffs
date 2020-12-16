@@ -22,6 +22,11 @@ Also, It doesn't go below "Suspicious" because you can't trade with factions bel
 
 Note: You can technically make the tariffs negative and they will pay YOU for selling to them. The UI will still say "-number"
 
+## Thanks
+Huge thanks to the folks in discord including: LazyWizard, stormbringer951, extremely loweffort art god, Ω Rubin Ω, and Jaghaimo (for the capital P in modPlugin).
+
+This is my first mod for this game, and my first time using Java since high school, they helped A LOT.
+
 ### Current Workflow setup
 * Currently using Apache NetBeans IDE version 10.0 on Linux (Ubuntu 20.04 LTS) to code all of this.
 * I'm using the Java JDK 1.7.0_80 from the Java archive on Oracles website.
