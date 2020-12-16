@@ -15,3 +15,8 @@ Because of this behavior the mod can be installed/removed mid playthrough ONCE I
 - [ ] Refactor for Transient Listener vs Permanent (utility:true)
 
 And an ongoing todo will be to just slim down the code/refactor for efficiency.
+
+### Current Workflow setup
+* Currently using Apache NetBeans IDE version 10.0 on Linux (Ubuntu 20.04 LTS) to code all of this.
+* I'm using the Java JDK 1.7.0_80 from the Java archive on Oracles website.
+* In order to build+test this mod I have a symlink between the mods folder and my Netbeans project folder.
