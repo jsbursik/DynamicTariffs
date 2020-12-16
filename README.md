@@ -29,5 +29,6 @@ This is my first mod for this game, and my first time using Java since high scho
 
 ### Current Workflow setup
 * Currently using Apache NetBeans IDE version 10.0 on Linux (Ubuntu 20.04 LTS) to code all of this.
+* I also have a working setup in Windows with VSCode using the [Project Manager for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-dependency&ssr=false#overview) plugin.
 * I'm using the Java JDK 1.7.0_80 from the Java archive on Oracles website.
 * In order to build+test this mod I have a symlink between the mods folder and my Netbeans project folder.
