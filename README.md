@@ -3,8 +3,8 @@ This is a utility mod for [Starsector](https://fractalsoftworks.com/) that dynam
 
 ## How it works
 The `settings.json` contains percents from Suspicious to Cooperative, as well as a whitelist.
-When you open a market, the mod first checks if the market is whitelisted, if it is, it checks your rep with the owning faction and applies a modification to the tariff.
-When you close the market, the specific modifications made by this mod will then be removed.
+When you load a save, it will go through all the whitelisted markets and modify their tariffs.
+Before you save it will unmodify them all, and after the save it will reimplement the modified tariffs.
 
 ## Stock settings
 Reputation | Tariff

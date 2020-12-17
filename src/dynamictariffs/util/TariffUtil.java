@@ -1,44 +1,37 @@
-package dynamictariffs.data.scripts;
+package dynamictariffs.util;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.BaseCampaignEventListener;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
-import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.campaign.RepLevel;
 import org.apache.log4j.Logger;
 
-public class ModifyTariffs extends BaseCampaignEventListener {
+public class TariffUtil extends BaseCampaignEventListener {
     
-    public static Logger log = Global.getLogger(ModifyTariffs.class);
-    
-    public ModifyTariffs() {
+    public static Logger log = Global.getLogger(TariffUtil.class);
+
+    public TariffUtil() {
         super(false);
         Global.getSector().addTransientListener(this);
     }
-
     /*  
-    *   This method is called anytime you open a market
-    *   and modifies the tariff according to your rep
-    *   ONLY if it is a part of the whitelist
+    *   This method just logs your current Rep with the faction
+    *   and shows the current modified tariff, mostly for dev
+    *   purposes.
     */
     @Override
-    public void reportPlayerOpenedMarket(MarketAPI market){
-        log.info("DynamicTariffs: Player opened Market");
-        if(SettingsUtil.isWhitelisted(market)){
-            modifyTariff(market);
-        } else {
-            log.info("DynamicTariffs: Market is not on whitelist");
-        }
+    public void reportPlayerOpenedMarket(MarketAPI market) {
+        RepLevel rep = EconUtil.getRepLevel(market);
+        log.info("DynamicTariffs: " + rep + " " + market.getTariff().getModifiedValue());
     }
     
     /*
-    *   This is where all the heavy lifting happens
+    *   This modifies the Tariff of a given Market based on Rep
     */
     public static void modifyTariff(MarketAPI market){
         float flat = 0.0f;
         int[] percents = SettingsUtil.getPercents();
-        RepLevel rep = market.getFaction().getRelationshipLevel(Global.getSector().getFaction(Factions.PLAYER));
-        
+        RepLevel rep = EconUtil.getRepLevel(market);
         switch(rep)
         {
             case SUSPICIOUS:
@@ -59,15 +52,12 @@ public class ModifyTariffs extends BaseCampaignEventListener {
             case COOPERATIVE:
                 flat = getOffset(percents[5]);
                 break;
+            default:
+                // This is to stop it warning me about the untradeable rep levels
         }
         
         market.getTariff().modifyFlat("dynamictariffs", flat);
-        
-        log.info("DynamicTariffs: " + rep + " " + market.getTariff().getModifiedValue());
-        // For Reference, this is how the modified value is recomputed
-        // modified = base + base * percentMod / 100f + flatMod
     }
-    
     /*
     * This takes a number like 40, subtracts the vanilla tariff
     * of 30 to get the offset, then turns it into something like 0.1f
@@ -75,17 +65,16 @@ public class ModifyTariffs extends BaseCampaignEventListener {
     public static float getOffset(float percent) {
         return (percent - 30) / 100f;
     }
-    
     /*
-    *   This makes sure all tariff changes made by this mod
-    *   are removed when you leave a market.
+    *   This makes sure that if your Rep changes on the fly, it get's updated
     */
     @Override
-    public void reportPlayerClosedMarket(MarketAPI market){
-        log.info("DynamicTariffs: Player Closed Market");
-        if(SettingsUtil.isWhitelisted(market)){
-            market.getTariff().unmodify("dynamictariffs");
+    public void reportPlayerReputationChange(String faction, float delta) {
+        for(String m : SettingsUtil.whitelist){
+            MarketAPI market = EconUtil.getMarket(m);
+            if(market.getFactionId() == faction){
+                modifyTariff(market);
+            }
         }
     }
-    
 }

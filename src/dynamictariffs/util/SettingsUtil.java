@@ -1,4 +1,4 @@
-package dynamictariffs.data.scripts;
+package dynamictariffs.util;
 
 import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.SettingsAPI;
@@ -18,8 +18,6 @@ public class SettingsUtil {
     
     public static int[] percents = new int[6];
     public static ArrayList<String> whitelist = new ArrayList<String>();
-    
-    
     /*
     *   This reads in the settings.json and populates the percents and whitelist arrays
     */
@@ -39,7 +37,6 @@ public class SettingsUtil {
             log.info(e.getMessage());
         }
     }
-    
     /*
     *   Checks for whitelist of the market being opened
     */
@@ -50,9 +47,8 @@ public class SettingsUtil {
         }
         return result;
     }
-    
     /*
-    *   Returns the percents array after its been read in
+    *   Returns the percents array
     */
     public static int[] getPercents(){
         return percents;
