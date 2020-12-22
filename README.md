@@ -10,13 +10,13 @@ Before you save it will unmodify them all, and after the save it will reimplemen
 Reputation | Tariff
 ---------|----------
 Suspicious | 30%
-Neutral | 15%
-Favorable | 10%
-Welcoming | 5%
-Friendly | 2%
-Cooperative | 0%
+Neutral | 25%
+Favorable | 20%
+Welcoming | 15%
+Friendly | 10%
+Cooperative | 5%
 
-To modify these value, edit `settings.json`.
+And if you are commissioned with the faction, it will be lowered an additional 5%. (This can be turned off in the `settings.json` with `dt_commission:false`)
 
 Also, It doesn't go below "Suspicious" because you can't trade with factions below that reputation level.
 
