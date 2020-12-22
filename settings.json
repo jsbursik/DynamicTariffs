@@ -1,6 +1,7 @@
 {
-    "dt_percents":[30,15,10,5,2,0],
-
+    "dt_percents":[30,25,20,15,10,5],
+    "dt_commission":true,
+    "dt_commModifier":5,
     "dt_whitelist":["ancyra_market","derinkuyu_market","sindria","volturn","cruor",
                     "nortia","umbra","chicomoztoc","coatl","tigra_city","eventide",
                     "orthrus","sphinx","asharu","jangala","corvus_IIIa","raesvelg",

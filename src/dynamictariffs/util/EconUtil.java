@@ -5,6 +5,9 @@ import com.fs.starfarer.api.campaign.econ.MarketAPI;
 
 import com.fs.starfarer.api.campaign.RepLevel;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
+import com.fs.starfarer.api.util.Misc;
+
+import java.util.List;
 
 /*
 *   This Class is just here to shorthand some common tasks when
@@ -32,6 +35,25 @@ public class EconUtil {
     */
     public static void unmodTariffs(String marketID){
         getMarket(marketID).getTariff().unmodify("dynamictariffs");
+    }
+    /*
+    *   Scaedumar found a flaw, need to check if a market exists first
+    */
+    public static boolean marketExists(String marketID){
+        MarketAPI market = getMarket(marketID);
+        List<MarketAPI> markets = Global.getSector().getEconomy().getMarketsCopy();
+        if(markets.contains(market)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /*
+    *   Need to check if the player is commissioned with the given market faction
+    */
+    public static boolean isCommissioned(MarketAPI market){
+        String faction = market.getFactionId();
+        return faction.equals(Misc.getCommissionFactionId());
     }
 
 }

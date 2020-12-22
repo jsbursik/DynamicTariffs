@@ -24,7 +24,6 @@ public class TariffUtil extends BaseCampaignEventListener {
         RepLevel rep = EconUtil.getRepLevel(market);
         log.info("DynamicTariffs: " + rep + " " + market.getTariff().getModifiedValue());
     }
-    
     /*
     *   This modifies the Tariff of a given Market based on Rep
     */
@@ -35,22 +34,22 @@ public class TariffUtil extends BaseCampaignEventListener {
         switch(rep)
         {
             case SUSPICIOUS:
-                flat = getOffset(percents[0]);
+                flat = getOffset(percents[0], market);
                 break;
             case NEUTRAL:
-                flat = getOffset(percents[1]);
+                flat = getOffset(percents[1], market);
                 break;
             case FAVORABLE:
-                flat = getOffset(percents[2]);
+                flat = getOffset(percents[2], market);
                 break;
             case WELCOMING:
-                flat = getOffset(percents[3]);
+                flat = getOffset(percents[3], market);
                 break;
             case FRIENDLY:
-                flat = getOffset(percents[4]);
+                flat = getOffset(percents[4], market);
                 break;
             case COOPERATIVE:
-                flat = getOffset(percents[5]);
+                flat = getOffset(percents[5], market);
                 break;
             default:
                 // This is to stop it warning me about the untradeable rep levels
@@ -59,10 +58,18 @@ public class TariffUtil extends BaseCampaignEventListener {
         market.getTariff().modifyFlat("dynamictariffs", flat);
     }
     /*
-    * This takes a number like 40, subtracts the vanilla tariff
-    * of 30 to get the offset, then turns it into something like 0.1f
+    *   This takes a number like 40, subtracts the vanilla tariff
+    *   of 30 to get the offset, then turns it into something like 0.1f
+    *   If commissioned it will subtract the commission percent as well
     */
-    public static float getOffset(float percent) {
+    public static float getOffset(int percent, MarketAPI market) {
+        if(SettingsUtil.commission && EconUtil.isCommissioned(market)){
+            int result = percent - 30 - SettingsUtil.commModifier;
+            if(result < -30){
+                return -30 / 100f;
+            }
+            return result / 100f;
+        }
         return (percent - 30) / 100f;
     }
     /*

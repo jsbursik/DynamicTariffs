@@ -20,7 +20,9 @@ public class DynamicTariffsPlugin extends BaseModPlugin {
         new TariffUtil();
         SettingsUtil.readSettings();
         for(String market : SettingsUtil.whitelist){
-            TariffUtil.modifyTariff(EconUtil.getMarket(market)); 
+            if(EconUtil.marketExists(market)){
+                TariffUtil.modifyTariff(EconUtil.getMarket(market)); 
+            }
         }
         log.info("DynamicTariffs: Loaded");
     }
@@ -31,7 +33,9 @@ public class DynamicTariffsPlugin extends BaseModPlugin {
     @Override
     public void beforeGameSave() {
         for(String market : SettingsUtil.whitelist){
-            EconUtil.unmodTariffs(market);
+            if(EconUtil.marketExists(market)){
+                EconUtil.unmodTariffs(market);
+            }
         }
         log.info("DynamicTariffs: Unmodified all Tariffs");
     }
@@ -42,7 +46,9 @@ public class DynamicTariffsPlugin extends BaseModPlugin {
     @Override
     public void afterGameSave() {
         for(String market : SettingsUtil.whitelist){
-            TariffUtil.modifyTariff(EconUtil.getMarket(market)); 
+            if(EconUtil.marketExists(market)){
+                TariffUtil.modifyTariff(EconUtil.getMarket(market));
+            } 
         }
         log.info("DynamicTariffs: Remodified Tariffs");
     }
