@@ -79,9 +79,11 @@ public class TariffUtil extends BaseCampaignEventListener {
     public void reportPlayerReputationChange(String faction, float delta) {
         for(String m : SettingsUtil.whitelist){
             MarketAPI market = EconUtil.getMarket(m);
-            if(market.getFactionId() == faction){
-                modifyTariff(market);
-            }
+            if(EconUtil.marketExists(m)){
+                if(market.getFactionId() == faction){
+                    modifyTariff(market);
+                }
+            } 
         }
     }
 }
