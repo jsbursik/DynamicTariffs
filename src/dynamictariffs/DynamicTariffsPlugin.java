@@ -24,7 +24,7 @@ public class DynamicTariffsPlugin extends BaseModPlugin {
                 TariffUtil.modifyTariff(EconUtil.getMarket(market)); 
             }
         }
-        log.info("DynamicTariffs: Loaded");
+        log.info("DynamicTariffs: Loaded, Tariffs modified");
     }
     /*
     *   This makes sure that before you save, none of the markets are

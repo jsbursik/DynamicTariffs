@@ -18,6 +18,7 @@ public class SettingsUtil {
     
     public static int[] percents = new int[6];
     public static ArrayList<String> whitelist = new ArrayList<String>();
+    public static Boolean granular = false;
     public static Boolean commission = false; // States whether or not you want Tariffs to also be modified by commission
     public static Integer commModifier = 0; // This will be how much the tariff should change based on commission
     /*
@@ -29,6 +30,7 @@ public class SettingsUtil {
             JSONObject modSettings = settings.loadJSON("settings.json", "dynamictariffs");
             JSONArray jsonPercents = modSettings.getJSONArray("dt_percents");
             JSONArray jsonWhitelist = modSettings.getJSONArray("dt_whitelist");
+            granular = modSettings.getBoolean("dt_granular");
             commission = modSettings.getBoolean("dt_commission");
             commModifier = modSettings.getInt("dt_commModifier");
             for(int i = 0; i < jsonPercents.length(); i++){
@@ -56,6 +58,12 @@ public class SettingsUtil {
     */
     public static int[] getPercents(){
         return percents;
+    }
+    /*
+    *   Returns whther granular was flipped on
+    */
+    public static Boolean getGranular(){
+        return granular;
     }
     
 }

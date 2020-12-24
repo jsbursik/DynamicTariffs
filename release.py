@@ -1,9 +1,34 @@
+from os.path import dirname, abspath
 from zipfile import ZipFile
+import platform
+import json
 
-file_name="Dynamic Tariffs.zip"
+platform = platform.system()
+mod_path = dirname(abspath(__file__))
+mod_name = ""
+utility = False
 
+if platform.lower() == "windows":
+    stripped_path = mod_path.split("\\")
+    mod_name = stripped_path[-1]
+
+if platform.lower() == "linux":
+    stripped_path = mod_path.split("/")
+    mod_name = stripped_path[-1]
+
+mod_info = open("mod_info.json", "r")
+json_object = json.load(mod_info)
+mod_info.close()
+
+version = input("Enter new version number: ")
+json_object["version"] = version
+
+mod_info = open("mod_info.json", "w")
+json.dump(json_object, mod_info, indent=4)
+mod_info.close()
+
+file_name = mod_name + ".zip"
 with ZipFile(file_name, "w") as myzip:
-    myzip.write("jars/Dynamic_Tariffs.jar")
+    myzip.write(f"jars/{mod_name}.jar")
     myzip.write("mod_info.json")
     myzip.write("settings.json")
-
