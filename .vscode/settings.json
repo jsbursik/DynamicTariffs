@@ -1,0 +1,8 @@
+{
+    "java.project.exportJar.targetPath": "${workspaceFolder}/jars/${workspaceFolderBasename}.jar",
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar"
+        ]
+    }
+}
