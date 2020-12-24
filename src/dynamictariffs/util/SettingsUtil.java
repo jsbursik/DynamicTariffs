@@ -20,10 +20,12 @@ public class SettingsUtil {
     public static ArrayList<String> whitelist = new ArrayList<String>();
     public static Boolean granular = false;
     public static Boolean commission = false; // States whether or not you want Tariffs to also be modified by commission
-    public static Integer commModifier = 0; // This will be how much the tariff should change based on commission
-    /*
-    *   This reads in the settings.json and populates the percents and whitelist arrays
-    */
+    public static Integer commDiscount = 0; // This will be how much the tariff should change based on commission
+
+
+    /**
+     * This reads in the settings.json file
+     */
     public static void readSettings(){
         whitelist.clear();
         try {
@@ -32,7 +34,7 @@ public class SettingsUtil {
             JSONArray jsonWhitelist = modSettings.getJSONArray("dt_whitelist");
             granular = modSettings.getBoolean("dt_granular");
             commission = modSettings.getBoolean("dt_commission");
-            commModifier = modSettings.getInt("dt_commModifier");
+            commDiscount = modSettings.getInt("dt_commDiscount");
             for(int i = 0; i < jsonPercents.length(); i++){
                 percents[i] = jsonPercents.getInt(i);
             }
@@ -43,9 +45,15 @@ public class SettingsUtil {
             log.info(e.getMessage());
         }
     }
-    /*
-    *   Checks for whitelist of the market being opened
-    */
+
+    
+    /** 
+     * This checks to see if a market is whitelisted, instead
+     * of other classes requesting the List and doing the Boolean
+     * logic for themselves
+     * @param market
+     * @return boolean
+     */
     public static boolean isWhitelisted(MarketAPI market){
         boolean result = false;
         if(whitelist.contains(market.getId())){
@@ -53,15 +61,21 @@ public class SettingsUtil {
         }
         return result;
     }
-    /*
-    *   Returns the percents array
-    */
+
+    
+    /** 
+     * Returns the array of tariff percents that are read in.
+     * @return int[]
+     */
     public static int[] getPercents(){
         return percents;
     }
-    /*
-    *   Returns whther granular was flipped on
-    */
+
+    
+    /** 
+     * This returns whether or not granular was flipped on
+     * @return Boolean
+     */
     public static Boolean getGranular(){
         return granular;
     }

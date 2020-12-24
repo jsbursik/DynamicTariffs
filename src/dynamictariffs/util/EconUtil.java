@@ -18,27 +18,46 @@ import java.util.List;
 *   from the read-in market id's, but hey, it works already, right?
 */
 public class EconUtil {
-    /*
-    *   Gets a MarketAPI for a given Market ID
-    */
+
+    
+    /**
+     * Takes in a String marketID returns the MarketAPI for it 
+     * @param marketID
+     * @return MarketAPI
+     */
     public static MarketAPI getMarket(String marketID){
         return Global.getSector().getEconomy().getMarket(marketID);
     }
-    /*
-    *   This gets your reputation level based on a markets faction
-    */
+
+    
+    /** 
+     * Takes in a MarketAPI returns a RepLevel for the faction
+     * owning the market.
+     * @param market
+     * @return RepLevel
+     */
     public static RepLevel getRepLevel(MarketAPI market){
         return market.getFaction().getRelationshipLevel(Global.getSector().getFaction(Factions.PLAYER));
     }
-    /*
-    *   This removes dynamictariffs modifications from a given Market ID
-    */
+
+    public static Float getRepFloat(MarketAPI market){
+        return market.getFaction().getRelationship(Factions.PLAYER);
+    }
+    
+    /** 
+     * Removes the modifications from a given marketID
+     * @param marketID
+     */
     public static void unmodTariffs(String marketID){
         getMarket(marketID).getTariff().unmodify("dynamictariffs");
     }
-    /*
-    *   Scaedumar found a flaw, need to check if a market exists first
-    */
+
+
+    /** 
+     * Checks to see if a market exists
+     * @param marketID
+     * @return boolean
+     */
     public static boolean marketExists(String marketID){
         MarketAPI market = getMarket(marketID);
         List<MarketAPI> markets = Global.getSector().getEconomy().getMarketsCopy();
@@ -48,9 +67,14 @@ public class EconUtil {
             return false;
         }
     }
-    /*
-    *   Need to check if the player is commissioned with the given market faction
-    */
+
+
+    /** 
+     * Takes in a MarketAPI and returns whether or not you
+     * are commissioned with the owning faction
+     * @param market
+     * @return boolean
+     */
     public static boolean isCommissioned(MarketAPI market){
         String faction = market.getFactionId();
         return faction.equals(Misc.getCommissionFactionId());
