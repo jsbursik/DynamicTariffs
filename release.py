@@ -3,16 +3,16 @@ from zipfile import ZipFile
 import platform
 import json
 
-platform = platform.system()
+opsys = platform.system()
 mod_path = dirname(abspath(__file__))
 mod_name = ""
 utility = False
 
-if platform.lower() == "windows":
+if opsys.lower() == "windows":
     stripped_path = mod_path.split("\\")
     mod_name = stripped_path[-1]
 
-if platform.lower() == "linux":
+if opsys.lower() == "linux":
     stripped_path = mod_path.split("/")
     mod_name = stripped_path[-1]
 
@@ -22,6 +22,7 @@ mod_info.close()
 
 version = input("Enter new version number: ")
 json_object["version"] = version
+
 
 mod_info = open("mod_info.json", "w")
 json.dump(json_object, mod_info, indent=4)

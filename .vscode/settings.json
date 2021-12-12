@@ -1,5 +1,5 @@
 {
-    "java.project.exportJar.targetPath": "${workspaceFolder}/jars/${workspaceFolderBasename}.jar",
+    "java.project.exportJar.targetPath": "${workspaceFolder}/jars/DynamicTariffs.jar",
     "java.project.referencedLibraries": {
         "include": [
             "lib/**/*.jar"
