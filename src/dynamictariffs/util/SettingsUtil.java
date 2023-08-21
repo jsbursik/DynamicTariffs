@@ -15,13 +15,13 @@ public class SettingsUtil {
     
     public static SettingsAPI settings = Global.getSettings();
     public static Logger log = Global.getLogger(SettingsUtil.class);
-    
-    public static int[] percents = new int[6];
-    public static ArrayList<String> whitelist = new ArrayList<String>();
-    public static Boolean granular = false;
-    public static Boolean commission = false; // States whether or not you want Tariffs to also be modified by commission
-    public static Integer commDiscount = 0; // This will be how much the tariff should change based on commission
 
+    public static Float[] percents = new Float[6];
+    public static ArrayList<String> whitelist = new ArrayList<String>();
+    public static Boolean useGranular = false;
+    public static Boolean commission = false; // States whether you want Tariffs to also be modified by commission
+    public static Float commDiscount = 0f; // This will be how much the tariff should change based on commission
+    public static Boolean useWhitelist = true;
 
     /**
      * This reads in the settings.json file
@@ -30,54 +30,29 @@ public class SettingsUtil {
         whitelist.clear();
         try {
             JSONObject modSettings = settings.loadJSON("settings.json", "dynamictariffs");
+
             JSONArray jsonPercents = modSettings.getJSONArray("dt_percents");
-            JSONArray jsonWhitelist = modSettings.getJSONArray("dt_whitelist");
-            granular = modSettings.getBoolean("dt_granular");
-            commission = modSettings.getBoolean("dt_commission");
-            commDiscount = modSettings.getInt("dt_commDiscount");
             for(int i = 0; i < jsonPercents.length(); i++){
-                percents[i] = jsonPercents.getInt(i);
+                percents[i] = jsonPercents.getInt(i) / 100f;
             }
-            for(int i = 0; i < jsonWhitelist.length(); i++){
-                whitelist.add(jsonWhitelist.getString(i));
+
+            useWhitelist = modSettings.getBoolean("dt_useWhitelist");
+            if(useWhitelist){
+                JSONArray jsonWhitelist = modSettings.getJSONArray("dt_whitelist");
+                for(int i = 0; i < jsonWhitelist.length(); i++){
+                    whitelist.add(jsonWhitelist.getString(i));
+                }
             }
+
+            useGranular = modSettings.getBoolean("dt_granular");
+            commission = modSettings.getBoolean("dt_commission");
+            commDiscount = modSettings.getInt("dt_commDiscount") / 100f;
+            useWhitelist = modSettings.getBoolean("dt_useWhitelist");
         } catch (IOException | JSONException e) {
             log.info(e.getMessage());
         }
     }
 
-    
-    /** 
-     * This checks to see if a market is whitelisted, instead
-     * of other classes requesting the List and doing the Boolean
-     * logic for themselves
-     * @param market
-     * @return boolean
-     */
-    public static boolean isWhitelisted(MarketAPI market){
-        boolean result = false;
-        if(whitelist.contains(market.getId())){
-            result = true;
-        }
-        return result;
-    }
 
-    
-    /** 
-     * Returns the array of tariff percents that are read in.
-     * @return int[]
-     */
-    public static int[] getPercents(){
-        return percents;
-    }
-
-    
-    /** 
-     * This returns whether or not granular was flipped on
-     * @return Boolean
-     */
-    public static Boolean getGranular(){
-        return granular;
-    }
     
 }
