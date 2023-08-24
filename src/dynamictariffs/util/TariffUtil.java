@@ -87,7 +87,7 @@ public class TariffUtil extends BaseCampaignEventListener {
         String[] RepArr = { "SUSPICIOUS", "NEUTRAL", "FAVORABLE", "WELCOMING", "FRIENDLY", "COOPERATIVE" };
         List<String> RepLevels = Arrays.asList(RepArr);
 
-        Float[] RepValues = new Float[] { -0.25f, -0.10f, 0.10f, 0.25f, 0.50f, 0.75f, 1.0f };
+        Float[] RepValues = new Float[] { -0.24f, -0.11f, 0.10f, 0.25f, 0.50f, 0.75f, 1.0f };
 
         String repLevel = market.getFaction().getRelationshipLevel(Factions.PLAYER).toString();
         Float repValue = market.getFaction().getRelationship(Factions.PLAYER);
@@ -95,19 +95,20 @@ public class TariffUtil extends BaseCampaignEventListener {
         Float tariff = 0f;
 
         int i = RepLevels.indexOf(repLevel);
-
-        if (SettingsUtil.useGranular) {
-            float stepAmt = Math.abs(RepValues[i + 1] - RepValues[i]) / Math.abs(percents[i] - percents[i + 1]);
-            tariff = percents[i] - ((1 / stepAmt) * (repValue - RepValues[i]));
-            if (isCommissioned(market) && SettingsUtil.commission) {
-                tariff -= SettingsUtil.commDiscount;
-                tariff = tariff < 0f ? -0.3f : tariff;
+        if (i > -1) {
+            if (SettingsUtil.useGranular) {
+                float stepAmt = Math.abs(RepValues[i + 1] - RepValues[i]) / Math.abs(percents[i] - percents[i + 1]);
+                tariff = percents[i] - ((1 / stepAmt) * (repValue - RepValues[i]));
+                if (isCommissioned(market) && SettingsUtil.commission) {
+                    tariff -= SettingsUtil.commDiscount;
+                    tariff = tariff < 0f ? -0.3f : tariff;
+                }
+                tariff = -(0.3f - tariff);
+                market.getTariff().modifyFlat("dynamictariffs", tariff);
+            } else {
+                tariff = -(0.3f - percents[i]);
+                market.getTariff().modifyFlat("dynamictariffs", tariff);
             }
-            tariff = -(0.3f - tariff);
-            market.getTariff().modifyFlat("dynamictariffs", tariff);
-        } else {
-            tariff = -(0.3f - percents[i]);
-            market.getTariff().modifyFlat("dynamictariffs", tariff);
         }
     }
 
