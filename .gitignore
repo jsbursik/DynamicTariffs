@@ -1,2 +1,6 @@
 *.zip
 javadoc
+# Don't upload compiler output
+classes/*
+# BUT keep the folder for any clones
+!classes/.gitkeep
