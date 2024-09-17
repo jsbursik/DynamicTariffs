@@ -1,15 +1,9 @@
 {
     "java.project.exportJar.targetPath": "${workspaceFolder}/jars/DynamicTariffs.jar",
-    "java.project.referencedLibraries": {
-        "include": [
-            "lib/**/*.jar"
-        ]
-    },
-    "java.configuration.runtimes": [
-        {
-            "name":"JavaSE-1.7",
-            "path":"C:\\Program Files\\Java\\jdk1.7.0_80",
-            "default":true
-        }
+    "java.project.referencedLibraries": [
+        "./lib/**/*.jar"
+    ],
+    "java.project.sourcePaths": [
+        "src"
     ]
 }
