@@ -30,6 +30,6 @@ mod_info.close()
 
 file_name = mod_name + ".zip"
 with ZipFile(file_name, "w") as myzip:
-    myzip.write(f"jars/{mod_name}.jar")
-    myzip.write("mod_info.json")
-    myzip.write("settings.json")
+    myzip.write(f"jars/{mod_name}.jar", arcname=f"DynamicTariffs/jars/{mod_name}.jar")
+    myzip.write("mod_info.json", arcname=f"DynamicTariffs/mod_info.json")
+    myzip.write("settings.json", arcname=f"DynamicTariffs/settings.json")
